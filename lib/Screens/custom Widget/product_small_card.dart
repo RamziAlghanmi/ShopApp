@@ -14,15 +14,14 @@ class ProductSmallCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              
               child: Container(
                 decoration: BoxDecoration(
                   borderRadius: .circular(10),
-                  color: Colors.grey[200],
+                  color: Colors.white,
                 ),
-                padding: EdgeInsets.all(0),
+                padding: EdgeInsets.all(8),
 
-                child: Image.network(product.imageUrl, fit: .cover),
+                child: Image.asset(product.imageUrl, fit: .cover),
               ),
             ),
             Padding(

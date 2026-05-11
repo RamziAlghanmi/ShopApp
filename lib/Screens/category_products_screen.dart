@@ -24,7 +24,7 @@ class CategoryProductsScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(16.0),
                 //
                 gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                  maxCrossAxisExtent: 200,
+                  maxCrossAxisExtent: 250,
                   crossAxisSpacing: 10,
                   mainAxisSpacing: 10,
                   childAspectRatio: 0.7,

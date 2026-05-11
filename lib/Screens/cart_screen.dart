@@ -50,7 +50,7 @@ class CartScreen extends StatelessWidget {
                             width: 60,
                             height: 60,
                             color: Colors.grey[200],
-                            child: Image.network(product.imageUrl, fit: .cover),
+                            child: Image.asset(product.imageUrl, fit: .cover),
                           ),
                           title: Text(product.name),
                           subtitle: Text(
