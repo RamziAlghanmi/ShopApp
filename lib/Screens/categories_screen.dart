@@ -11,16 +11,17 @@ class CategoriesScreen extends StatelessWidget {
     return Directionality(
       textDirection: .rtl,
       child: Scaffold(
-        appBar: AppBar(
-          title: const Text('جميع الفئات'),
-        ),
+        appBar: AppBar(title: const Text('جميع الفئات')),
         body: GridView.builder(
           padding: const EdgeInsets.all(16.0),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 16.0,
-            mainAxisSpacing: 16.0,
-            childAspectRatio: 1.2,
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: 100,
+            childAspectRatio: 1,
+            mainAxisExtent: 2,
+            // crossAxisCount: 2,
+            // crossAxisSpacing: 16.0,
+            // mainAxisSpacing: 16.0,
+            // childAspectRatio: 1.2,
           ),
           itemCount: categories.length,
           itemBuilder: (context, index) {
@@ -30,8 +31,7 @@ class CategoriesScreen extends StatelessWidget {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) =>
-                        CategoryProductsScreen(category: category),
+                    builder: (_) => CategoryProductsScreen(category: category),
                   ),
                 );
               },
@@ -64,4 +64,5 @@ class CategoriesScreen extends StatelessWidget {
     );
   }
 
+  //
 }
