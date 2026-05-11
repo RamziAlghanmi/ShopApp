@@ -22,7 +22,7 @@ class ProductSmallCard extends StatelessWidget {
                 ),
                 padding: EdgeInsets.all(0),
 
-                child: Image.asset(product.imageUrl, fit: .cover),
+                child: Image.network(product.imageUrl, fit: .cover),
               ),
             ),
             Padding(

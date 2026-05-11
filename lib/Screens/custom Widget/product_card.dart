@@ -26,7 +26,7 @@ class ProductCard extends StatelessWidget {
                 borderRadius: .circular(15),
               ),
 
-              child: Image.asset(product.imageUrl, fit: .cover),
+              child: Image.network(product.imageUrl, fit: .cover),
             ),
 
             Column(

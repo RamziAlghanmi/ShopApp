@@ -22,11 +22,12 @@ class CategoryProductsScreen extends StatelessWidget {
             ? const Center(child: Text('لا توجد منتجات في هذه الفئة'))
             : GridView.builder(
                 padding: const EdgeInsets.all(16.0),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                  childAspectRatio: 0.8,
+                //
+                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
+                  childAspectRatio: 0.7,
                 ),
                 itemCount: categoryProducts.length,
                 itemBuilder: (context, index) {
