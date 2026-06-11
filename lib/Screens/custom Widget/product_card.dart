@@ -26,14 +26,22 @@ class ProductCard extends StatelessWidget {
                 borderRadius: .circular(15),
               ),
 
-              child: Image.asset(product.imageUrl, fit: .cover),
+              child: Image.network(
+                product.thumbnail,
+                fit: BoxFit.cover,
+                errorBuilder: (_, __, ___) => Icon(
+                  getCategoryIcon(product.category),
+                  size: 60,
+                  color: Colors.blue,
+                ),
+              ),
             ),
 
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  product.name,
+                  product.title,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -68,18 +76,15 @@ class ProductCard extends StatelessWidget {
   }
 }
 
-
 IconData getCategoryIcon(String category) {
-    switch (category) {
-      case 'إلكترونيات':
-        return Icons.devices;
-      case 'ملابس':
-        return Icons.checkroom;
-      case 'كتب':
-        return Icons.book;
-      default:
-        return Icons.category;
-    }
+  switch (category) {
+    case 'إلكترونيات':
+      return Icons.devices;
+    case 'ملابس':
+      return Icons.checkroom;
+    case 'كتب':
+      return Icons.book;
+    default:
+      return Icons.category;
   }
-
-  
+}

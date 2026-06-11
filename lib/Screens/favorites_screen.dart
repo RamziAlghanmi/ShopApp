@@ -42,9 +42,9 @@ class FavoritesScreen extends StatelessWidget {
                       width: 60,
                       height: 60,
                       color: Colors.grey[200],
-                      child: Image.asset(product.imageUrl, fit: .cover),
+                      child: Image.asset(product.thumbnail, fit: .cover),
                     ),
-                    title: Text(product.name),
+                    title: Text(product.title),
                     subtitle: Text(
                       '${product.price.toStringAsFixed(2)} ريال',
                       style: const TextStyle(

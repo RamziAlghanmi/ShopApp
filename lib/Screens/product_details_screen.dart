@@ -15,7 +15,7 @@ class ProductDetailsScreen extends StatelessWidget {
     return Directionality(
       textDirection: .rtl,
       child: Scaffold(
-        appBar: AppBar(title: Text(product.name)),
+        appBar: AppBar(title: Text(product.title)),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

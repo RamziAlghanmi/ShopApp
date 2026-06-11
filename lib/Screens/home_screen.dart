@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:shop_app/Screens/category_products_screen.dart';
 import 'package:shop_app/Screens/custom%20Widget/product_card.dart';
 import 'package:shop_app/Screens/custom%20Widget/product_small_card.dart';
+import 'package:shop_app/providers/product_provider.dart';
 import '../models/product.dart';
 import '../providers/cart_provider.dart';
 import 'categories_screen.dart';
@@ -15,12 +16,12 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, List<Product>> categorizedProducts = {};
-    for (var category in categories) {
-      categorizedProducts[category] = products
-          .where((p) => p.category == category)
-          .toList();
-    }
+    // final Map<String, List<Product>> categorizedProducts = {};
+    // for (var category in categories) {
+    //   categorizedProducts[category] = products
+    //       .where((p) => p.category == category)
+    //       .toList();
+    // }
 
     return Directionality(
       textDirection: .rtl,
@@ -94,104 +95,138 @@ class HomeScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: ElevatedButton.icon(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => const CategoriesScreen(),
-                      ),
-                    );
-                  },
-                  icon: const Icon(Icons.category),
-                  label: const Text('عرض جميع الفئات'),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                ),
-              ),
-
-              ...categorizedProducts.entries.map(
-                (entry) => Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+        body: Consumer<ProductProvider>(
+          builder: (context, productProvider, child) {
+            if (productProvider.isLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (productProvider.errorMessage != null) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: 10),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 8.0,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(
-                                getCategoryIcon(entry.key),
-                                // this method in the custom widget/ product_card file
-                                size: 30,
-                                color: Colors.blue,
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                entry.key,
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          TextButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) => CategoryProductsScreen(
-                                    category: entry.key,
-                                  ),
-                                ),
-                              );
-                            },
-                            child: const Text('عرض الكل'),
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 200,
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        itemCount: entry.value.length,
-                        itemBuilder: (context, index) {
-                          final product = entry.value[index];
-                          return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (_) =>
-                                      ProductDetailsScreen(product: product),
-                                ),
-                              );
-                            },
-                            child: ProductSmallCard(product: product),
-                          );
-                        },
-                      ),
+                    Text('خطأ: ${productProvider.errorMessage}'),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () => productProvider.loadProducts(),
+                      child: const Text('إعادة المحاولة'),
                     ),
                   ],
                 ),
+              );
+            }
+
+            final products = productProvider.allProducts;
+            // تجميع المنتجات حسب التصنيف
+            final Map<String, List<Product>> categorized = {};
+            for (var cat in productProvider.categories) {
+              categorized[cat] = products
+                  .where((p) => p.category == cat)
+                  .toList();
+            }
+            return SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const CategoriesScreen(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.category),
+                      label: const Text('عرض جميع الفئات'),
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size(double.infinity, 50),
+                      ),
+                    ),
+                  ),
+
+                  ...categorized.entries.map(
+                    (entry) => Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: 10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 16.0,
+                            vertical: 8.0,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    getCategoryIcon(entry.key),
+                                    // this method in the custom widget/ product_card file
+                                    size: 30,
+                                    color: Colors.blue,
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    entry.key,
+                                    style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => CategoryProductsScreen(
+                                        category: entry.key,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: const Text('عرض الكل'),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 10.0,
+                            ),
+                            itemCount: entry.value.length,
+                            itemBuilder: (context, index) {
+                              final product = entry.value[index];
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => ProductDetailsScreen(
+                                        product: product,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: ProductSmallCard(product: product),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );
