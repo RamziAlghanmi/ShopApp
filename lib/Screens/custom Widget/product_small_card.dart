@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shop_app/Screens/custom%20Widget/product_card.dart';
+import 'package:shop_app/screens/custom%20Widget/product_card.dart';
 import 'package:shop_app/models/product.dart';
 
 class ProductSmallCard extends StatelessWidget {

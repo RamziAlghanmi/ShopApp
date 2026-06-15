@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shop_app/Screens/category_products_screen.dart';
-import 'package:shop_app/Screens/custom%20Widget/product_card.dart';
-import 'package:shop_app/Screens/custom%20Widget/product_small_card.dart';
+import 'package:shop_app/models/product.dart';
+import 'package:shop_app/providers/cart_provider.dart';
+import 'package:shop_app/screens/cart_screen.dart';
+import 'package:shop_app/screens/categories_screen.dart';
+import 'package:shop_app/screens/category_products_screen.dart';
+import 'package:shop_app/screens/custom%20Widget/product_card.dart';
+import 'package:shop_app/screens/custom%20Widget/product_small_card.dart';
 import 'package:shop_app/providers/product_provider.dart';
-import '../models/product.dart';
-import '../providers/cart_provider.dart';
-import 'categories_screen.dart';
-import 'product_details_screen.dart';
-import 'cart_screen.dart';
-import 'favorites_screen.dart';
+import 'package:shop_app/screens/favorites_screen.dart';
+import 'package:shop_app/screens/product_details_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final Map<String, List<Product>> categorizedProducts = {};
-    // for (var category in categories) {
-    //   categorizedProducts[category] = products
-    //       .where((p) => p.category == category)
-    //       .toList();
-    // }
 
     return Directionality(
       textDirection: .rtl,

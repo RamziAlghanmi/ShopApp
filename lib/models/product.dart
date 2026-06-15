@@ -1,5 +1,3 @@
-
-
 // From bummyjson abi
 class Product {
   final String id;

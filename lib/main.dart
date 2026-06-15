@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop_app/providers/cart_provider.dart';
+import 'package:shop_app/providers/favorites_provider.dart';
 import 'package:shop_app/providers/product_provider.dart';
-import 'providers/cart_provider.dart';
-import 'providers/favorites_provider.dart';
-import 'Screens/home_screen.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shop_app/screens/home_screen.dart';
 
 void main() {
   runApp(MyApp());
 }
 
-// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +27,6 @@ class MyApp extends StatelessWidget {
 
         theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Cairo'),
         home: const HomeScreen(),
-        // home: ProductCard(product: pro),
       ),
     );
   }
